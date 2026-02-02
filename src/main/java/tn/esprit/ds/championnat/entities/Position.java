@@ -16,6 +16,13 @@ public class Position {
     @Column(name = "nb_points", nullable = false)
     private Integer nbPoints;
 
+    @ManyToOne
+    private Course course;
+
+    @ManyToOne
+    private Pilote pilote;
+
+
     // Getters & Setters
 
     public Long getIdPosition() {

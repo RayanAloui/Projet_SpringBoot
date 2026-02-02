@@ -1,6 +1,8 @@
 package tn.esprit.ds.championnat.entities;
-
 import jakarta.persistence.*;
+
+import java.util.List;
+
 
 @Entity
 @Table(name = "championnat")
@@ -17,6 +19,11 @@ public class Championnat {
     private String libelleC;
 
     private Integer annee;
+
+    @OneToOne
+    private DetailChampionnat detailChampionnat;
+    @ManyToMany
+    private List<Course> courses;
 
     // Getters & Setters
 
@@ -51,4 +58,6 @@ public class Championnat {
     public void setAnnee(Integer annee) {
         this.annee = annee;
     }
+
+
 }

@@ -2,6 +2,8 @@ package tn.esprit.ds.championnat.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "equipe")
 public class Equipe {
@@ -18,6 +20,12 @@ public class Equipe {
 
     @Column(name = "classement_general")
     private Integer classementGeneral;
+
+    @OneToMany(mappedBy = "equipe")
+    private List<Pilote> pilotes;
+
+    @OneToMany(mappedBy = "equipe")
+    private List<Contrat> contrats;
 
     // Getters & Setters
 

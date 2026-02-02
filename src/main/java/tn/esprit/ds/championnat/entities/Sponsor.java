@@ -2,6 +2,8 @@ package tn.esprit.ds.championnat.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "sponsor")
 public class Sponsor {
@@ -21,6 +23,9 @@ public class Sponsor {
 
     @Column(name = "bloquer_contrat")
     private Boolean bloquerContrat;
+
+    @OneToMany(mappedBy = "sponsor")
+    private List<Contrat> contrats;
 
     // Getters & Setters
 

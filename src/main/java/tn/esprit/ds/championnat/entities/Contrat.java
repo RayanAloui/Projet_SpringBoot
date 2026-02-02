@@ -19,6 +19,13 @@ public class Contrat {
     @Column(nullable = false)
     private Boolean archived;
 
+    @ManyToOne
+    private Equipe equipe;
+
+    @ManyToOne
+    private Sponsor sponsor;
+
+
     // Getters & Setters
 
     public Long getIdContrat() {

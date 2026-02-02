@@ -13,6 +13,10 @@ public class DetailChampionnat {
     @Column(length = 255)
     private String description;
 
+    @OneToOne(mappedBy = "detailChampionnat")
+    private Championnat championnat;
+
+
     // Getters & Setters
 
     public String getCode() {
