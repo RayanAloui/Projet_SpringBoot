@@ -2,6 +2,7 @@ package tn.esprit.ds.championnat.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -27,7 +28,12 @@ public class Sponsor {
     @OneToMany(mappedBy = "sponsor")
     private List<Contrat> contrats;
 
+    Boolean archived;
+    LocalDate dateCreation;
+    LocalDate dateDerniereModification;
+
     // Getters & Setters
+
 
     public Long getIdSponsor() {
         return idSponsor;
@@ -67,5 +73,37 @@ public class Sponsor {
 
     public void setBloquerContrat(Boolean bloquerContrat) {
         this.bloquerContrat = bloquerContrat;
+    }
+
+    public List<Contrat> getContrats() {
+        return contrats;
+    }
+
+    public void setContrats(List<Contrat> contrats) {
+        this.contrats = contrats;
+    }
+
+    public Boolean getArchived() {
+        return archived;
+    }
+
+    public void setArchived(Boolean archived) {
+        this.archived = archived;
+    }
+
+    public LocalDate getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(LocalDate dateCreattion) {
+        this.dateCreation = dateCreattion;
+    }
+
+    public LocalDate getDateDerniereModification() {
+        return dateDerniereModification;
+    }
+
+    public void setDateDerniereModification(LocalDate dateDerniereModification) {
+        this.dateDerniereModification = dateDerniereModification;
     }
 }
