@@ -1,51 +1,31 @@
 package tn.esprit.ds.championnat.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "position")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Position {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPosition;
+    Long idPosition;
 
     @Column(nullable = false)
-    private Integer classement;
+    Integer classement;
 
     @Column(name = "nb_points", nullable = false)
-    private Integer nbPoints;
+    Integer nbPoints;
 
     @ManyToOne
-    private Course course;
+    Course course;
 
     @ManyToOne
-    private Pilote pilote;
-
-
-    // Getters & Setters
-
-    public Long getIdPosition() {
-        return idPosition;
-    }
-
-    public void setIdPosition(Long idPosition) {
-        this.idPosition = idPosition;
-    }
-
-    public Integer getClassement() {
-        return classement;
-    }
-
-    public void setClassement(Integer classement) {
-        this.classement = classement;
-    }
-
-    public Integer getNbPoints() {
-        return nbPoints;
-    }
-
-    public void setNbPoints(Integer nbPoints) {
-        this.nbPoints = nbPoints;
-    }
+    Pilote pilote;
 }

@@ -1,63 +1,35 @@
 package tn.esprit.ds.championnat.entities;
 
 import jakarta.persistence.*;
-
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import java.util.List;
 
 @Entity
 @Table(name = "pilote")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Pilote {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPilote;
+    Long idPilote;
 
     @Column(name = "libelle_p", nullable = false)
-    private String libelleP;
+    String libelleP;
 
     @Column(name = "nb_points_total")
-    private Integer nbPointsTotal;
+    Integer nbPointsTotal;
 
     @Column(name = "classement_general")
-    private Integer classementGeneral;
+    Integer classementGeneral;
 
     @ManyToOne
-    private Equipe equipe;
+    Equipe equipe;
 
     @OneToMany(mappedBy = "pilote")
-    private List<Position> positions;
-
-    // Getters & Setters
-
-    public Long getIdPilote() {
-        return idPilote;
-    }
-
-    public void setIdPilote(Long idPilote) {
-        this.idPilote = idPilote;
-    }
-
-    public String getLibelleP() {
-        return libelleP;
-    }
-
-    public void setLibelleP(String libelleP) {
-        this.libelleP = libelleP;
-    }
-
-    public Integer getNbPointsTotal() {
-        return nbPointsTotal;
-    }
-
-    public void setNbPointsTotal(Integer nbPointsTotal) {
-        this.nbPointsTotal = nbPointsTotal;
-    }
-
-    public Integer getClassementGeneral() {
-        return classementGeneral;
-    }
-
-    public void setClassementGeneral(Integer classementGeneral) {
-        this.classementGeneral = classementGeneral;
-    }
+    List<Position> positions;
 }

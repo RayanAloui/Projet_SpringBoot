@@ -1,63 +1,37 @@
 package tn.esprit.ds.championnat.entities;
+
 import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
-
 @Entity
 @Table(name = "championnat")
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+
 public class Championnat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idChampionnat;
+    Long idChampionnat;
 
     @Enumerated(EnumType.STRING)
-    private Categorie categorie;
+    Categorie categorie;
 
     @Column(name = "libelle_c", nullable = false)
-    private String libelleC;
+    String libelleC;
 
-    private Integer annee;
+    Integer annee;
 
     @OneToOne
-    private DetailChampionnat detailChampionnat;
+    DetailChampionnat detailChampionnat;
+
     @ManyToMany
-    private List<Course> courses;
-
-    // Getters & Setters
-
-    public Long getIdChampionnat() {
-        return idChampionnat;
-    }
-
-    public void setIdChampionnat(Long idChampionnat) {
-        this.idChampionnat = idChampionnat;
-    }
-
-    public Categorie getCategorie() {
-        return categorie;
-    }
-
-    public void setCategorie(Categorie categorie) {
-        this.categorie = categorie;
-    }
-
-    public String getLibelleC() {
-        return libelleC;
-    }
-
-    public void setLibelleC(String libelleC) {
-        this.libelleC = libelleC;
-    }
-
-    public Integer getAnnee() {
-        return annee;
-    }
-
-    public void setAnnee(Integer annee) {
-        this.annee = annee;
-    }
-
-
+    List<Course> courses;
 }

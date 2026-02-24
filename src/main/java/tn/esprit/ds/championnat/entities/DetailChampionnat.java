@@ -1,37 +1,25 @@
 package tn.esprit.ds.championnat.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "detail_championnat")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class DetailChampionnat {
 
     @Id
     @Column(length = 20)
-    private String code;
+    String code;
 
     @Column(length = 255)
-    private String description;
+    String description;
 
     @OneToOne(mappedBy = "detailChampionnat")
-    private Championnat championnat;
-
-
-    // Getters & Setters
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    Championnat championnat;
 }
