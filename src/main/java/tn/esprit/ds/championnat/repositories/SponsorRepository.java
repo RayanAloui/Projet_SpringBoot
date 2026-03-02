@@ -6,5 +6,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import tn.esprit.ds.championnat.entities.Sponsor;
 
 public interface SponsorRepository extends JpaRepository<Sponsor, Long> {
-
+    Sponsor findByNomAndPays(String nom, String pays);
 }
