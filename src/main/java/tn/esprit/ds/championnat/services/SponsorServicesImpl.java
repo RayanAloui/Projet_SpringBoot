@@ -8,32 +8,26 @@ import tn.esprit.ds.championnat.repositories.SponsorRepository;
 import java.time.LocalDate;
 import java.util.List;
 
+
 @Service
 @AllArgsConstructor
-public class SponsorServiceImpl implements ISponsorService {
+public class SponsorServicesImpl implements ISponsorServices{
     private SponsorRepository sponsorRepository;
-
     @Override
     public Sponsor ajouterSponsor(Sponsor sponsor) {
         sponsor.setDateCreation(LocalDate.now());
         sponsor.setArchived(false);
         sponsor.setBloquerContrat(false);
-
         return sponsorRepository.save(sponsor);
-
-        //2ème façon
-        //sponsorRepository.save(sponsor);
-        //return sponsor;
     }
 
     @Override
     public List<Sponsor> ajouterSponsors(List<Sponsor> sponsors) {
-        sponsors.forEach(s -> {
-            s.setDateCreation(LocalDate.now());
-            s.setArchived(false);
-            s.setBloquerContrat(false);
-        });
-
+        for(Sponsor sponsor : sponsors){
+            sponsor.setDateCreation(LocalDate.now());
+            sponsor.setArchived(false);
+            sponsor.setBloquerContrat(false);
+        }
         return sponsorRepository.saveAll(sponsors);
     }
 
@@ -60,13 +54,12 @@ public class SponsorServiceImpl implements ISponsorService {
 
     @Override
     public Boolean archiverSponsor(Long idSponsor) {
-        Sponsor s = sponsorRepository.findById(idSponsor).orElse(null);
-
-        if (s == null) return false;
-
-        s.setArchived(true);
-        sponsorRepository.save(s);
-
+        Sponsor sponsor = sponsorRepository.findById(idSponsor).orElse(null);
+        if (sponsor == null) {
+            return false;
+        }
+        sponsor.setArchived(true);
+        sponsorRepository.save(sponsor);
         return true;
     }
 }

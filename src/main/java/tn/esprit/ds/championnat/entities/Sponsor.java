@@ -1,40 +1,39 @@
 package tn.esprit.ds.championnat.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import lombok.Data;
+
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Table(name = "sponsor")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@Data
 public class Sponsor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long idSponsor;
+    @Column(name = "id_sponsor")
+    private Long idSponsor;
 
-    @Column(nullable = false)
-    String nom;
+    @Column(name = "nom", nullable = false, length = 100)
+    private String nom;
 
-    @Column(nullable = false)
-    String pays;
+    @Column(name = "pays", nullable = false, length = 50)
+    private String pays;
 
-    @Column(name = "budget_annuel")
-    Float budgetAnnuel;
+    @Column(name = "budget_annuel", nullable = false)
+    private Float budgetAnnuel;
 
-    @Column(name = "bloquer_contrat")
-    Boolean bloquerContrat;
+    @Column(name = "bloquer_contrat", nullable = false)
+    private Boolean bloquerContrat;
+
+    private Boolean archived;
+    private LocalDate dateCreation;
+    private LocalDate dateDerniereModification;
+
 
     @OneToMany(mappedBy = "sponsor")
-    List<Contrat> contrats;
+    private List<Contrat> contrats;
 
-    Boolean archived;
-    LocalDate dateCreation;
-    LocalDate dateDerniereModification;
 }

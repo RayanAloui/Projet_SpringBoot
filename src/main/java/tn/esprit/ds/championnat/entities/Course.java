@@ -1,36 +1,30 @@
 package tn.esprit.ds.championnat.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Table(name = "course")
-
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
-
+@Data
 public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long idCourse;
+    @Column(name = "id_course")
+    private Long idCourse;
 
-    @Column(nullable = false)
-    String emplacement;
+    @Column(nullable = false, length = 100)
+    private String emplacement;
 
-    @Column(name = "date_course")
-    LocalDate dateCourse;
+    @Column(name = "date_course", nullable = false)
+    private LocalDate dateCourse;
 
     @ManyToMany(mappedBy = "courses")
-    List<Championnat> championnats;
+    private List<Championnat> championnats;
 
     @OneToMany(mappedBy = "course")
-    List<Position> positions;
+    private List<Position> positions;
 }

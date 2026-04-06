@@ -1,8 +1,9 @@
 package tn.esprit.ds.championnat.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import tn.esprit.ds.championnat.entities.Championnat;
 
-public interface ChampionnatRepository
-        extends JpaRepository<Championnat, Long> {
+@Repository
+public interface ChampionnatRepository extends JpaRepository<Championnat,Long> {
 }

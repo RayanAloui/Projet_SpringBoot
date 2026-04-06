@@ -4,7 +4,7 @@ import tn.esprit.ds.championnat.entities.Sponsor;
 
 import java.util.List;
 
-public interface ISponsorService {
+public interface ISponsorServices {
     Sponsor ajouterSponsor(Sponsor sponsor);
 
     List<Sponsor> ajouterSponsors(List<Sponsor> sponsors);

@@ -1,36 +1,30 @@
 package tn.esprit.ds.championnat.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import lombok.Data;
 
 @Entity
 @Table(name = "contrat")
-
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
-
+@Data
 public class Contrat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long idContrat;
+    @Column(name = "id_contrat")
+    private Long idContrat;
 
     @Column(nullable = false)
-    Float montant;
+    private Float montant;
 
-    @Column(length = 4, nullable = false)
-    String annee;
+    @Column(nullable = false, length = 4)
+    private String annee;
 
     @Column(nullable = false)
-    Boolean archived;
+    private Boolean archived = false;
 
     @ManyToOne
-    Equipe equipe;
+    private Equipe equipe;
 
     @ManyToOne
-    Sponsor sponsor;
+    private Sponsor sponsor;
 }

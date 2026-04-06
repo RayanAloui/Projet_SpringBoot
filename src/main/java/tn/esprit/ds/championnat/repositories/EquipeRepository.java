@@ -1,8 +1,10 @@
 package tn.esprit.ds.championnat.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import tn.esprit.ds.championnat.entities.Equipe;
 
-public interface EquipeRepository extends JpaRepository<Equipe, Long> {
+@Repository
+public interface EquipeRepository extends JpaRepository<Equipe,Long> {
     Equipe findByLibelle(String libelle);
 }

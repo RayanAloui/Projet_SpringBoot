@@ -1,31 +1,28 @@
 package tn.esprit.ds.championnat.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import lombok.Data;
 
 @Entity
-@Table(name = "position")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(name = "positions")
+@Data
 public class Position {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long idPosition;
+    @Column(name = "id_position")
+    private Long idPosition;
 
-    @Column(nullable = false)
-    Integer classement;
+    @Column(name = "classement", nullable = false)
+    private int classement;
 
     @Column(name = "nb_points", nullable = false)
-    Integer nbPoints;
+    private int nbPoints;
 
     @ManyToOne
-    Course course;
+    private Course course;
 
     @ManyToOne
-    Pilote pilote;
+    private Pilote pilote;
+
 }
