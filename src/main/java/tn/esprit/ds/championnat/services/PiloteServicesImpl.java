@@ -32,7 +32,7 @@ public class PiloteServicesImpl implements IPiloteServices{
     }
     @Override
     //@Scheduled(cron="0 15 11 31 12 *")
-    @Scheduled(cron = "0/10 * * * * *")
+    //@Scheduled(cron = "0/10 * * * * *")
     public void updatePointsAndClassements(){
         int position = 1;
         LocalDate start = LocalDate.of(LocalDate.now().getYear(),1,1);
@@ -54,5 +54,18 @@ public class PiloteServicesImpl implements IPiloteServices{
         position++;
         piloteRepository.save(p);
     }
+    }
+
+    @Override
+    public Float moyennePositionsEntreDeuxDate(LocalDate startDate, LocalDate endDate, String libelleP) {
+        List<Position> positions = positionRepository.findByPiloteLibellePAndCourseDateCourseBetween(libelleP, startDate, endDate);
+        if (positions == null || positions.isEmpty()) {
+            return 0f;
+        }
+        float sum = 0f;
+        for (Position p : positions) {
+            sum += p.getClassement();
+        }
+        return sum / positions.size();
     }
 }
