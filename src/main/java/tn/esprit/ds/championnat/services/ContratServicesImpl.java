@@ -12,11 +12,17 @@ import tn.esprit.ds.championnat.repositories.EquipeRepository;
 import java.time.LocalDate;
 import java.util.List;
 
+import tn.esprit.ds.championnat.dtos.ContratDto;
+import tn.esprit.ds.championnat.entities.Sponsor;
+import tn.esprit.ds.championnat.repositories.SponsorRepository;
+
 @Service
 @AllArgsConstructor
 public class ContratServicesImpl implements IContratServices{
     ContratRepository contratRepository;
     EquipeRepository equipeRepository;
+    SponsorRepository sponsorRepository;
+    
     @Override
     @Scheduled(cron = "0/30 * * * * *")
     public void archiverContratsExpireesEtAffichageContratsActifsParEquipe() {
@@ -35,5 +41,28 @@ public class ContratServicesImpl implements IContratServices{
             }
         }
 
+    }
+
+    @Override
+    public ContratDto ajoutContratEtAffecterASponsorEtEquipe(Contrat contrat, String libelleEquipe, String nomSponsor, String pays) {
+        Equipe equipe = equipeRepository.findByLibelle(libelleEquipe);
+        Sponsor sponsor = sponsorRepository.findByNomAndPays(nomSponsor, pays);
+
+        if (equipe != null && sponsor != null) {
+            contrat.setEquipe(equipe);
+            contrat.setSponsor(sponsor);
+            Contrat savedContrat = contratRepository.save(contrat);
+
+            // Solution manuelle de mapping vers DTO
+            ContratDto dto = new ContratDto();
+            dto.setIdContrat(savedContrat.getIdContrat());
+            dto.setMontant(savedContrat.getMontant());
+            dto.setAnnee(savedContrat.getAnnee());
+            dto.setLibelleEquipe(savedContrat.getEquipe().getLibelle());
+            dto.setNomSponsor(savedContrat.getSponsor().getNom());
+
+            return dto;
+        }
+        return null;
     }
 }

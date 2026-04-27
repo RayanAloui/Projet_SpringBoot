@@ -9,4 +9,5 @@ public interface IPiloteServices {
     public Pilote AffecterPiloteAEquipe(String libP, String libEq);
     void updatePointsAndClassements();
     Float moyennePositionsEntreDeuxDate(LocalDate startDate, LocalDate endDate, String libelleP);
+    java.util.List<tn.esprit.ds.championnat.dtos.PiloteDto> listeWinners(Integer annee);
 }

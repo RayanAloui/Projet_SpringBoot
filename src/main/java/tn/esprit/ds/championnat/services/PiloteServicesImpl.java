@@ -6,12 +6,19 @@ import org.springframework.stereotype.Service;
 import tn.esprit.ds.championnat.entities.Categorie;
 import tn.esprit.ds.championnat.entities.Pilote;
 import tn.esprit.ds.championnat.entities.Position;
+import tn.esprit.ds.championnat.dtos.PiloteDto;
+import tn.esprit.ds.championnat.entities.Championnat;
+import tn.esprit.ds.championnat.entities.Course;
+import tn.esprit.ds.championnat.repositories.ChampionnatRepository;
 import tn.esprit.ds.championnat.repositories.EquipeRepository;
 import tn.esprit.ds.championnat.repositories.PiloteRepository;
 import tn.esprit.ds.championnat.repositories.PositionRepository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -19,6 +26,7 @@ public class PiloteServicesImpl implements IPiloteServices{
     private PiloteRepository piloteRepository;
     private EquipeRepository equipeRepository;
     private PositionRepository positionRepository;
+    private ChampionnatRepository championnatRepository;
     @Override
     public String addPilote(Pilote p) {
         piloteRepository.save(p);
@@ -67,5 +75,46 @@ public class PiloteServicesImpl implements IPiloteServices{
             sum += p.getClassement();
         }
         return sum / positions.size();
+    }
+
+    @Override
+    public List<PiloteDto> listeWinners(Integer annee) {
+        List<Championnat> championnats = championnatRepository.findByAnneeGreaterThan(annee);
+        List<PiloteDto> winners = new ArrayList<>();
+
+        for (Championnat championnat : championnats) {
+            Map<Pilote, Integer> pointsPilotes = new HashMap<>();
+
+            if (championnat.getCourses() != null) {
+                for (Course course : championnat.getCourses()) {
+                    if (course.getPositions() != null) {
+                        for (Position pos : course.getPositions()) {
+                            Pilote pilote = pos.getPilote();
+                            int currentPoints = pointsPilotes.getOrDefault(pilote, 0);
+                            pointsPilotes.put(pilote, currentPoints + pos.getNbPoints());
+                        }
+                    }
+                }
+            }
+
+            Pilote winner = null;
+            int maxPoints = -1;
+
+            for (Map.Entry<Pilote, Integer> entry : pointsPilotes.entrySet()) {
+                if (entry.getValue() > maxPoints) {
+                    maxPoints = entry.getValue();
+                    winner = entry.getKey();
+                }
+            }
+
+            if (winner != null) {
+                PiloteDto dto = new PiloteDto();
+                dto.setLibelleP(winner.getLibelleP());
+                dto.setNbPointsTotal(maxPoints);
+                dto.setLibelleC(championnat.getLibelleC());
+                winners.add(dto);
+            }
+        }
+        return winners;
     }
 }

@@ -6,4 +6,5 @@ import tn.esprit.ds.championnat.entities.Championnat;
 
 @Repository
 public interface ChampionnatRepository extends JpaRepository<Championnat,Long> {
+    java.util.List<Championnat> findByAnneeGreaterThan(Integer annee);
 }
